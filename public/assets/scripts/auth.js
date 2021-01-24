@@ -1,65 +1,62 @@
-const authPage = document.querySelector('main#auth')
+const authPage = document.querySelector("main#auth");
 
-if(authPage){
+if (authPage) {
+  const hideAuthForms = () => {
+    document
+      .querySelectorAll("#auth form")
+      .forEach((el) => el.classList.add("hide"));
+  };
 
-    const hideAuthForms = () => {
+  const showAuthForm = (id) => {
+    document.getElementById(id).classList.remove("hide");
+  };
 
-        document.querySelectorAll("#auth form")
-        .forEach( el => el.classList.add('hide'))
+  const authHash = () => {
+    hideAuthForms();
+
+    if (sessionStorage.getItem("email")) {
+      document
+        .querySelectorAll("[name=email]")
+        .forEach((el) => (el.value = sessionStorage.getItem("email")));
     }
 
-    const showAuthForm = id => {
-
-        document.getElementById(id).classList.remove('hide')
+    //analise o hash na url da window. window.location.hash
+    switch (window.location.hash) {
+      case "#register":
+        showAuthForm("register");
+        break;
+      case "#login":
+        showAuthForm("login");
+        break;
+      case "#forget":
+        showAuthForm("forget");
+        break;
+      case "#reset":
+        showAuthForm("reset");
+        break;
+      default:
+        showAuthForm("auth-email");
     }
+  };
 
-    const authHash = () =>{
-        hideAuthForms()
+  window.addEventListener("load", (e) => {
+    authHash();
+  });
 
-        if(sessionStorage.getItem('email')){
-            document.querySelectorAll('[name=email]')
-            .forEach(el => el.value = sessionStorage.getItem('email'))
-        }
+  window.addEventListener("hashchange", (e) => {
+    authHash();
+  });
 
-        //analise o hash na url da window. window.location.hash
-        switch(window.location.hash){
-            case '#register' :
-                showAuthForm('register')
-                break
-            case '#login' :
-                showAuthForm('login')
-                break
-            case '#forget' :
-                showAuthForm('forget')
-                break
-            case '#reset' :
-                showAuthForm('reset')
-                break
-            default :
-                showAuthForm('auth-email')
-        }
-    }
+  const formAuthEmail = document.querySelector("#auth-email");
 
-    window.addEventListener('load', e => {
-        authHash()
-    })
+  formAuthEmail.addEventListener("submit", (e) => {
+    e.preventDefault();
+    //e.stopPropagation()
+    const btnSubmit = e.target.querySelector("[type=submit]");
+    btnSubmit.disabled = true;
 
-    window.addEventListener('hashchange', e => {
-        authHash()
-    })
-
-    const formAuthEmail = document.querySelector("#auth-email")
-
-    formAuthEmail.addEventListener('submit', e => {
-
-        e.preventDefault()
-        //e.stopPropagation()
-        const btnSubmit = e.target.querySelector('[type=submit]')
-        btnSubmit.disabled = true
-
-        sessionStorage.setItem('email', formAuthEmail.email.value)
-        location.hash = '#login'
-        btnSubmit.disabled = false
-        
-    })
+    sessionStorage.setItem("email", formAuthEmail.email.value);
+    location.hash = "#login";
+    btnSubmit.disabled = false;
+  });
 }
