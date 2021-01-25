@@ -1,10 +1,13 @@
 {
   "hosting": {
     "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  },
+  "apiKey": "AIzaSyBncCjCJPQ3H1h031fSWKKJ-NwfAtzZxsI",
+  "authDomain": "javascriptferrari.firebaseapp.com",
+  "projectId": "javascriptferrari",
+  "storageBucket": "javascriptferrari.appspot.com",
+  "messagingSenderId": "847288298447",
+  "appId": "1:847288298447:web:a31ca3664f4b9b9bf1c0ba",
+  "measurementId": "G-CFLG0JGM1G"
 }
